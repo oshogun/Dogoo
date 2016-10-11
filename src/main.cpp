@@ -1,38 +1,53 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "ResourceHolder.h"
+#include "Tile.h"
 #include <iostream>
 #include <thread>
-void runPrototype() {
-    std::cout << "Welcome, adventurer, to Dogoo\n";
-    std::cout << "Please, inform us of your name\n";
-    std::string name;
-    std::getline(std::cin, name);
-
-    std::cout << "Very well, your name is " << name << "\n";
-}
-
+#include "Map.h"
 int main()
 {
-    std::thread test(runPrototype);
-	sf::RenderWindow window(sf::VideoMode(672,544), "Teste");
-    sf::Texture texture;
-    if(!texture.loadFromFile("resources/map21x17.png")) {
+    sf::Texture tileset;
+    if (!tileset.loadFromFile("resources/sprites/2.png")) {
         return -1;
     }
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
+    sf::Sprite sprite(tileset, sf::IntRect(1,37,8,8));
+	sprite.setScale(5,5);
+
+    Tile brick1(TileTypes::BRICK);
+    brick1.setSprite(sprite);
+    Map map(32,32);
+    for (int i = 0; i < 32; i++)
+    {
+        for(int j = 0; j < 32; j++)
+        {
+            map.setTileAt(i,j,brick1);
+        }
+    }
+
+    sf::RenderWindow window(sf::VideoMode(800,600), "Teste");
 	while (window.isOpen()) {
 	    sf::Event event;
 	 	while (window.pollEvent(event)) {
 	 		if (event.type == sf::Event::Closed)
  			    window.close();
  	    }
- 	    window.clear(sf::Color::Black);
-        window.draw(sprite);
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                sf::Sprite temp = map.getTileAt(i,j).getSprite();
+                temp.setPosition(j * 40, i * 40);
+                window.draw(temp);
+            }
+        }
+ 	    // window.draw(map.getTileAt(0,0).getSprite());
+      //   sf::Sprite temp = map.getTileAt(0,1).getSprite();
+      //   temp.setPosition(sf::Vector2f(40, 0));
+      //   window.draw(temp);
+      //   temp = map.getTileAt(0,2).getSprite();
+      //   temp.setPosition(sf::Vector2f(80,0));
+      //   window.draw(temp);
 	    window.display(); 
     }
-    test.join();
 	
     
     
