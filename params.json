@@ -1,0 +1,6 @@
+{
+  "name": "Dogoo",
+  "tagline": "A Roguelike game.",
+  "body": "### Welcome to Dogoo!! \r\nDogoo is an RPG being developed by @oshogun, in the C++ Programming Language, and it is completely free to play and open source. It is a game unlike **anything you have played before**, _except maybe for Rogue, Nethack, IVAN..._\r\n\r\n![Screenshot may not be representative of final product](teaser.png)",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

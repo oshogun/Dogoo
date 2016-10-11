@@ -1,2 +1,2 @@
-# Dogoo
-A simple RPG made in C++
+# dogoo
+A Roguelike game.
