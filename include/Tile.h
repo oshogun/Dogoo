@@ -12,7 +12,7 @@ class Tile {
 public:
     Tile(){}
     Tile(TileTypes _type);
-    void setSprite(const sf::Sprite & _sprite);
+    void setSprite(const sf::Sprite & _sprite); // vou passar por cópia, sla
     sf::Sprite & getSprite();
     const sf::Sprite & getSprite() const;
     TileTypes getType();
