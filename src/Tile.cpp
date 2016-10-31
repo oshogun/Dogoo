@@ -2,7 +2,8 @@
 
 Tile::Tile(TileTypes _type)
 {
-    type = _type;    
+    type = _type;
+    occupable = false; 
 }
 
 void Tile::setSprite(const sf::Sprite & _sprite)
@@ -33,10 +34,14 @@ const TileTypes Tile::getType() const
 
 void Tile::setAscii(char _asciiCharacter) {
 	asciiCharacter = _asciiCharacter;
+	currentAscii = asciiCharacter;
 }
 
 char Tile::getAscii() {
 	return asciiCharacter;
+}
+char Tile::getCurrentAscii() {
+	return currentAscii;
 }
 
 bool Tile::getContainsPlayer() {
@@ -46,8 +51,13 @@ bool Tile::getContainsPlayer() {
 void Tile::setContainsPlayer(bool _containsPlayer) {
 	containsPlayer = _containsPlayer;
 	if (containsPlayer)
-		setAscii('@');
+		currentAscii = '@';
+	else {
+		currentAscii = asciiCharacter;
+	} 
+
 }
+
 
 bool Tile::getContainsObject() {
 	return containsObject;
@@ -56,15 +66,26 @@ bool Tile::getContainsObject() {
 void Tile::setContainsObject(bool _containsObject) {
 	containsObject = _containsObject;
 	if (containsObject)
-		setAscii('O');
+		currentAscii = 'O';
+	else
+		currentAscii = asciiCharacter;
 }
 
 bool Tile::getContainsMonster() {
 	return containsMonster;
-	if (containsMonster)
-		setAscii('M');
 }
 
 void Tile::setContainsMonster(bool _containsMonster) {
 	containsMonster = _containsMonster;
+	if (containsMonster)
+		currentAscii = 'M';
+	else
+		currentAscii = asciiCharacter;
+}
+
+bool Tile::getOccupable() {
+	return occupable;
+}
+void Tile::setOccupable(bool _occupable) {
+	occupable = _occupable;
 }
