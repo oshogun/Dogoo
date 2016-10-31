@@ -17,8 +17,21 @@ public:
     const sf::Sprite & getSprite() const;
     TileTypes getType();
     const TileTypes getType() const;
+    void setAscii(char _asciiCharacter);
+    char getAscii();
+    bool getContainsPlayer();
+    void setContainsPlayer(bool _containsPlayer);
+    bool getContainsObject();
+    void setContainsObject(bool _containsObject);
+    bool getContainsMonster();
+    void setContainsMonster(bool _containsMonster);
 private:
     sf::Sprite sprite;
     TileTypes type;
+    char asciiCharacter; // for CLI representation
+    bool containsPlayer; // true if a player is currently on the tile
+    bool containsObject; // true if item or chest currently on the tile
+    bool containsMonster; // true if monster currently on the tile
+
 };
 
