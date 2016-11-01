@@ -65,10 +65,13 @@ bool Tile::getContainsObject() {
 
 void Tile::setContainsObject(bool _containsObject) {
 	containsObject = _containsObject;
-	if (containsObject)
+	if (containsObject) {
 		currentAscii = 'O';
-	else
+		occupable = false;
+	} else {
 		currentAscii = asciiCharacter;
+		occupable = true;
+	}
 }
 
 bool Tile::getContainsMonster() {
