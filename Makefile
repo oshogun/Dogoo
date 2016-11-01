@@ -7,5 +7,7 @@ all:
 
 clean:
 	rm dogoo 
+runCli:
+	./dogoo cli
 run:
-	./dogoo
+	./dogoo 

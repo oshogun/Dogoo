@@ -48,30 +48,31 @@ void Map::setPlayerPosition(int x, int y) {
 void Map::movePlayer (Directions direction) {
 	int oldPosX = playerPosition.x;
 	int oldPosY = playerPosition.y;
-
+	int newPosX = oldPosX;
+	int newPosY = oldPosY;
 	switch (direction) {
 		case Directions::NORTH:
 			if (oldPosX - 1 >= 0) 
 				if (tileMap[oldPosX - 1][oldPosY].getOccupable())
-					playerPosition.x--;
+					newPosX--;
 			break;
 		case Directions::SOUTH:
 			if (oldPosX + 1 < tileMap.size())
 				if (tileMap[oldPosX + 1][oldPosY].getOccupable())
-					playerPosition.x++;
+					newPosX++;
 			break;
 		case Directions::WEST:
 			if(oldPosY -1 >= 0)
 				if (tileMap[oldPosX][oldPosY - 1].getOccupable())
-					playerPosition.y--;
+					newPosY--;
 			break;
 		case Directions::EAST:
 			if (oldPosY + 1 < tileMap[0].size())
 				if (tileMap[oldPosX][oldPosY + 1].getOccupable())
-					playerPosition.y++;
+					newPosY++;
 			break;
 	}
 		tileMap[oldPosX][oldPosY].setContainsPlayer(false);
-		tileMap[playerPosition.x][playerPosition.y].setContainsPlayer(true);
+		setPlayerPosition(newPosX,newPosY);
 }	
 	
