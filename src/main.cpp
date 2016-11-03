@@ -5,8 +5,9 @@
 #include <iostream>
 #include <thread>
 #include "Map.h"
-#include "stdlib.h"
+#include <stdlib.h>
 #include <cstring>
+#include <time.h>
 
 // TEMPORARY SHIT:
 Map map(15,15);
@@ -21,7 +22,7 @@ sf::Texture creatureSprites;
 // TODO this is temporary and just for test:
 // this entire file is temporary and just for test
 
-void generateMap() 
+void generateMap(sf::Vector2i playerStartingPos) 
 {
     for (auto i = 0; i < 15; i++)
         for (auto j = 0; j < 15; j++) {
@@ -31,6 +32,85 @@ void generateMap()
         for (auto j = 1; j < 14; j++) {
             map.setTileAt(i, j, floorType);
         }
+    }
+    // Zoeira da geração procedural.
+    srand(time(NULL));
+    int nObjects = (int)(rand() % 8);
+    int nWalls = (int)((rand() % 32) + 8);
+    bool valid = false;
+     for(auto i = 0; i < nWalls; i++) {
+        int objX, objY;
+        while (!valid) {                       
+            objX = (int)((rand() + 1) % 14);
+            objY = (int)((rand() + 1) % 14);
+            if(&map.getTileAt(objX + 1, objY) == &brickType
+                && &map.getTileAt(objX + 2, objY) == &brickType) {
+                valid = false;
+            }
+            if(&map.getTileAt(objX, objY + 1) == &brickType 
+                && &map.getTileAt(objX, objY + 2) == &brickType) {
+                valid = false;
+            }
+            if((&map.getTileAt(objX, objY + 1) == &brickType 
+                && &map.getTileAt(objX + 1, objY) == &brickType  || 
+                (&map.getTileAt(objX, objY-1) == &brickType 
+                && &map.getTileAt(objX -1 , objY) == &brickType )))  {
+                valid = false;
+            }
+            if (&map.getTileAt(objX - 1, objY - 1) == &brickType ||
+                &map.getTileAt(objX - 1, objY + 1) == &brickType ||
+                &map.getTileAt(objX + 1, objY - 1) == &brickType ||
+                &map.getTileAt(objX + 1, objY + 1) == &brickType) {
+                valid = false;
+            }   
+            if (objX == playerStartingPos.x && objY == playerStartingPos.y) {
+                valid = false;
+            } else {
+                valid = true;
+            }           
+            
+        }
+        valid = false;
+        map.setTileAt(objX,objY,brickType);
+    }
+
+    valid = false;
+
+    for(auto i = 0; i < nObjects; i++) {
+        int objX, objY;
+        while (!valid) {                       
+            objX = (int)((rand() + 1) % 14);
+            objY = (int)((rand() + 1) % 14);
+            
+            if(map.getTileAt(objX,objY).getOccupable()) {
+                valid = true;
+                if(map.getTileAt(objX + 1, objY).getContainsObject() 
+                    && map.getTileAt(objX + 2, objY).getContainsObject()) {
+                    valid = false;
+                }
+                if(map.getTileAt(objX, objY + 1).getContainsObject() 
+                    && map.getTileAt(objX, objY + 2).getContainsObject()) {
+                    valid = false;
+                }
+                if((map.getTileAt(objX, objY + 1).getContainsObject()
+                    && map.getTileAt(objX + 1, objY).getContainsObject()) || 
+                    (map.getTileAt(objX, objY-1).getContainsObject() 
+                    && map.getTileAt(objX -1 , objY).getContainsObject()))  {
+                    valid = false;
+                }
+                if (map.getTileAt(objX - 1, objY - 1).getContainsObject() ||
+                    map.getTileAt(objX - 1, objY + 1).getContainsObject() ||
+                    map.getTileAt(objX + 1, objY - 1).getContainsObject() ||
+                    map.getTileAt(objX + 1, objY + 1).getContainsObject()) {
+                    valid = false;
+                }   
+                if (objX == playerStartingPos.x && objY == playerStartingPos.y) {
+                    valid = false;
+                }           
+            }
+        }
+        valid = false;
+        map.getTileAt(objX,objY).setContainsObject(true);
     }
 }
 
@@ -51,6 +131,8 @@ void drawMap() {
             for (auto j = 0; j < 15; j++) {
             sf::Sprite layer1 = map.getTileAt(i, j).getSprite();
             layer1.setPosition(sf::Vector2f(j * 24, i * 24));
+            if (!map.getTileAt(i,j).getOccupable() && map.getTileAt(i,j).getType() != TileTypes::BRICK)
+                layer1.setColor(sf::Color::Green);
             window.draw(layer1);
         }
     }
@@ -111,9 +193,8 @@ int guiMain()
     floorType.setSprite(sprite_floor);
     brickType.setOccupable(false);
     floorType.setOccupable(true);
-    generateMap();
+    generateMap(sf::Vector2i(6,6));
     map.setPlayerPosition(6,6);
-
     window.create(sf::VideoMode(360,360), "Dogoo", sf::Style::Titlebar);
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -142,7 +223,7 @@ int consoleMain()
     floorType.setAscii('.');
     brickType.setOccupable(false);
     floorType.setOccupable(true);
-    generateMap();
+    generateMap(sf::Vector2i(7,7));
     bool done = false;
     map.setPlayerPosition(7,7);
     map.getTileAt(10,10).setContainsObject(true);
