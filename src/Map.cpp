@@ -75,4 +75,11 @@ void Map::movePlayer (Directions direction) {
 		tileMap[oldPosX][oldPosY].setContainsPlayer(false);
 		setPlayerPosition(newPosX,newPosY);
 }	
-	
+
+void Map::setRows(_rows) {
+	rows = _rows;
+}
+
+void Map::setCollumns(_collumns) {
+	collumns = _collumns;
+}

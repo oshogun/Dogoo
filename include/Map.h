@@ -8,7 +8,9 @@ enum Directions {
 
 class Map {
 public:
+	Map();
 	Map(unsigned _rows, unsigned _collumns);
+	Map(const Map& map){}
 	Tile & getTileAt(unsigned row, unsigned col);
 	void setTileAt(unsigned row, unsigned col, const Tile & tile);
 	unsigned getRows();
@@ -17,14 +19,16 @@ public:
 	void movePlayer(Directions direction);
 	sf::Vector2i getPlayerPosition();
 	void setPlayerPosition(int i, int j);
+	void setRows();
+	void setCollumns();
 
 
 private:
 	// TODO replace this with a proper data structure:
 	std::vector<std::vector<Tile>> tileMap;
 	//----------------------------------------------
-	const unsigned rows;
-	const unsigned collumns;
+	unsigned rows;
+	unsigned collumns;
 	sf::Vector2i playerPosition; 
 
 };
