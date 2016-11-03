@@ -38,41 +38,6 @@ void generateMap(sf::Vector2i playerStartingPos)
     int nObjects = (int)(rand() % 8);
     int nWalls = (int)((rand() % 32) + 8);
     bool valid = false;
-     for(auto i = 0; i < nWalls; i++) {
-        int objX, objY;
-        while (!valid) {                       
-            objX = (int)((rand() + 1) % 14);
-            objY = (int)((rand() + 1) % 14);
-            if(&map.getTileAt(objX + 1, objY) == &brickType
-                && &map.getTileAt(objX + 2, objY) == &brickType) {
-                valid = false;
-            }
-            if(&map.getTileAt(objX, objY + 1) == &brickType 
-                && &map.getTileAt(objX, objY + 2) == &brickType) {
-                valid = false;
-            }
-            if((&map.getTileAt(objX, objY + 1) == &brickType 
-                && &map.getTileAt(objX + 1, objY) == &brickType  || 
-                (&map.getTileAt(objX, objY-1) == &brickType 
-                && &map.getTileAt(objX -1 , objY) == &brickType )))  {
-                valid = false;
-            }
-            if (&map.getTileAt(objX - 1, objY - 1) == &brickType ||
-                &map.getTileAt(objX - 1, objY + 1) == &brickType ||
-                &map.getTileAt(objX + 1, objY - 1) == &brickType ||
-                &map.getTileAt(objX + 1, objY + 1) == &brickType) {
-                valid = false;
-            }   
-            if (objX == playerStartingPos.x && objY == playerStartingPos.y) {
-                valid = false;
-            } else {
-                valid = true;
-            }           
-            
-        }
-        valid = false;
-        map.setTileAt(objX,objY,brickType);
-    }
 
     valid = false;
 
