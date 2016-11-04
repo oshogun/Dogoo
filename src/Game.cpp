@@ -2,6 +2,13 @@
 
 Game::Game():mapCount(0) {
 	loadTilesets();
+	initTiles();
+	generateMap(15,15);
+	currentMap = maps[0];
+}
+
+void Game::initTiles() 
+{
 	Tile brickTile(TileTypes::BRICK);
 	brickTile.setAscii('#');
 	brickTile.setOccupable(false);
@@ -10,11 +17,7 @@ Game::Game():mapCount(0) {
 	floorTile.setOccupable(true);
 	tiles.insert(std::make_pair(BRICK_SPRITE, brickTile));
 	tiles.insert(std::make_pair(FLOOR_SPRITE, floorTile));
-
-	generateMap(15,15);
-	currentMap = maps[0];
 }
-
 
 
 void Game::generateMap(unsigned rows, unsigned cols)

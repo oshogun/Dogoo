@@ -23,6 +23,7 @@ public:
 
 private:
 	void loadTilesets();
+	void initTiles();
 	unsigned mapCount;
 	ResourceHolder<sf::Texture, Tilesets> tileSetHolder;
 	std::vector<std::shared_ptr<Map>> maps;
