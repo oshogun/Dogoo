@@ -233,6 +233,9 @@ int main(int argc, char** argv)
 
     Game game;
     game.printCurrentMap();
+    game.moveToNextMap();
+    game.printCurrentMap();
+    game.printPreviousMap();
     // //game.printPreviousMap();
 
 }

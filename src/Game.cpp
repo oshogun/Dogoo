@@ -51,7 +51,21 @@ void Game::printCurrentMap()
 
     }
 }
+
+void Game::printPreviousMap()
+{
+	for (auto i = 0; i < previousMap->getRows(); i++) {
+
+        for (auto j = 0; j < previousMap->getCollumns(); j++) {
+            std::cout << previousMap->getTileAt(i,j).getCurrentAscii();
+            if (j == previousMap->getCollumns() - 1) std::cout << "\n";
+        }
+
+    }
+}
 void Game::moveToNextMap() 
 {
-
+	previousMap = currentMap;
+	generateMap(10,10);
+	currentMap = maps[mapCount - 1];
 }

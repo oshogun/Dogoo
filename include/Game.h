@@ -19,7 +19,7 @@ public:
 	void moveToNextMap();
 	// Debug functions:
 	void printCurrentMap();
-	void printPreviousMap(){}
+	void printPreviousMap();
 
 private:
 	void loadTilesets();
