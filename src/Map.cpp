@@ -8,6 +8,13 @@ Map::Map(const unsigned _rows, const unsigned _collumns):
 }
 
 
+Map::Map(const Map& map)
+{
+	rows = map.rows;
+	collumns = map.collumns;
+	tileMap = map.tileMap;
+}
+
 
 Tile & Map::getTileAt(unsigned row, unsigned col)
 {
@@ -76,10 +83,10 @@ void Map::movePlayer (Directions direction) {
 		setPlayerPosition(newPosX,newPosY);
 }	
 
-void Map::setRows(_rows) {
+void Map::setRows(unsigned _rows) {
 	rows = _rows;
 }
 
-void Map::setCollumns(_collumns) {
+void Map::setCollumns(unsigned _collumns) {
 	collumns = _collumns;
 }

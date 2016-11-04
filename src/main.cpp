@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <cstring>
 #include <time.h>
-
+#include "Game.h"
 // TEMPORARY SHIT:
 Map map(15,15);
 Tile brickType(TileTypes::BRICK);
@@ -219,17 +219,22 @@ int consoleMain()
 
 int main(int argc, char** argv)
 {
-    int returnValue;
-    if (argc != 2) {
-        returnValue = guiMain();
-    } else if (argc == 2 && !strcmp(argv[1], "cli")) {
-        returnValue = consoleMain();
-    } else {
-        std::cout << "Invalid parameters " << std::endl;
-        return -1;
-    }
+    // int returnValue;
+    // if (argc != 2) {
+    //     returnValue = guiMain();
+    // } else if (argc == 2 && !strcmp(argv[1], "cli")) {
+    //     returnValue = consoleMain();
+    // } else {
+    //     std::cout << "Invalid parameters " << std::endl;
+    //     return -1;
+    // }
 
-    return returnValue;
+    // return returnValue;
+
+    Game game;
+    game.printCurrentMap();
+    // //game.printPreviousMap();
+
 }
 	
     

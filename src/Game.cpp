@@ -1,7 +1,36 @@
 #include "Game.h"
 
-Game::Game() {
+Game::Game():mapCount(0) {
 	loadTilesets();
+	Tile brickTile(TileTypes::BRICK);
+	brickTile.setAscii('#');
+	brickTile.setOccupable(false);
+	Tile floorTile(TileTypes::FLOOR);
+	floorTile.setAscii('.');
+	floorTile.setOccupable(true);
+	tiles.insert(std::make_pair(BRICK_SPRITE, brickTile));
+	tiles.insert(std::make_pair(FLOOR_SPRITE, floorTile));
+
+	generateMap(15,15);
+	currentMap = maps[0];
+}
+
+
+
+void Game::generateMap(unsigned rows, unsigned cols)
+{
+	std::shared_ptr<Map> map(new Map(rows, cols));
+	for (auto i = 0; i < rows; i++)
+        for (auto j = 0; j < cols; j++) {
+            map->setTileAt(i, j, tiles.find(BRICK_SPRITE)->second);
+        }
+    for (auto i = 1; i < rows - 1; i++) {
+        for (auto j = 1; j < cols - 1; j++) {
+            map->setTileAt(i, j, tiles.find(FLOOR_SPRITE)->second);
+        }
+    }
+    maps.push_back(map);
+    mapCount++;
 
 }
 
@@ -9,23 +38,20 @@ void Game::loadTilesets() {
 	tileSetHolder.load(TILEMAP, "resources/sprites/2.png");
 	tileSetHolder.load(SPRITES, "resources/sprites/5.png");
 	tileSetHolder.load(PORTAL, "resources/sprites/entrance.png");
-	generateMap(14,14);
-	
 }
 
-void Game::generateMap(unsigned rows, unsigned cols)
+void Game::printCurrentMap()
 {
-	currentMap.setRows(size.x);
-	currentMap.setCollumns(size.y);
-	Tile brickType(TileTypes::BRICK);
-	Tile floorType(TileTypes::FLOOR);
-	for (auto i = 0; i < size.x; i++)
-        for (auto j = 0; j < size.x; j++) {
-            currentMap.setTileAt(i, j, brickType);
+	for (auto i = 0; i < currentMap->getRows(); i++) {
+
+        for (auto j = 0; j < currentMap->getCollumns(); j++) {
+            std::cout << currentMap->getTileAt(i,j).getCurrentAscii();
+            if (j == currentMap->getCollumns() - 1) std::cout << "\n";
         }
-    for (auto i = 1; i < size.y - 1; i++) {
-        for (auto j = 1; j < size.y - 1; j++) {
-            currentMap.setTileAt(i, j, floorType);
-        }
+
     }
+}
+void Game::moveToNextMap() 
+{
+
 }
